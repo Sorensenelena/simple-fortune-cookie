@@ -1,12 +1,12 @@
 services:
   backend:
-    build: ./backend
+    image: ghcr.io/sorensenelena/simple-fortune-cookie-backend:latest
     ports:
       - "9000:9000"
     restart: unless-stopped
 
   frontend:
-    build: ./frontend
+    image: ghcr.io/sorensenelena/simple-fortune-cookie-frontend:latest
     ports:
       - "8080:8080"
     depends_on:
