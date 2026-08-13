@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fortune-backend
+  labels:
+    app: fortune-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fortune-backend
+  template:
+    metadata:
+      labels:
+        app: fortune-backend
+    spec:
+      containers:
+        - name: backend
+          image: ghcr.io/sorensenelena/simple-fortune-cookie-backend:latest
+          ports:
+            - containerPort: 9000
