@@ -17,5 +17,21 @@ spec:
       containers:
         - name: frontend
           image: ghcr.io/sorensenelena/simple-fortune-cookie-frontend:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: fortune-frontend-config
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 20
