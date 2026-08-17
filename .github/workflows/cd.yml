@@ -10,7 +10,7 @@ env:
   IMAGE_FRONTEND: ghcr.io/sorensenelena/simple-fortune-cookie-frontend
 
 jobs:
-  build-and-test:
+  Build:
     runs-on: ubuntu-latest
     steps:
       - name: Clone down repository
@@ -32,9 +32,9 @@ jobs:
         working-directory: frontend
         run: go test ./...
 
-  lint:
+  Linting:
     runs-on: ubuntu-latest
-    needs: [ build-and-test ]
+    needs: [ Build ]
     steps:
       - name: Clone down repository
         uses: actions/checkout@v7
@@ -49,7 +49,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-    needs: [ build-and-test, lint ]
+    needs: [ Build, Linting ]
     permissions:
       contents: read
       packages: write
