@@ -97,9 +97,14 @@ jobs:
       - name: Apply Kubernetes manifests
         run: kubectl apply -f k8s/
 
-      - name: Roll out the new images
+      - name: Deploy commit images
         run: |
-          kubectl rollout restart deployment/fortune-backend deployment/fortune-frontend
+          kubectl set image deployment/fortune-backend \
+            backend="${IMAGE_BACKEND}:${GITHUB_SHA}"
+      
+          kubectl set image deployment/fortune-frontend \
+            frontend="${IMAGE_FRONTEND}:${GITHUB_SHA}"
+      
           kubectl rollout status deployment/fortune-backend --timeout=120s
           kubectl rollout status deployment/fortune-frontend --timeout=120s
           kubectl rollout status deployment/fortune-redis --timeout=120s
