@@ -17,5 +17,19 @@ spec:
       containers:
         - name: backend
           image: ghcr.io/sorensenelena/simple-fortune-cookie-backend:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 9000
+          envFrom:
+            - configMapRef:
+                name: fortune-backend-config
+          readinessProbe:
+            tcpSocket:
+              port: 9000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 9000
+            initialDelaySeconds: 10
+            periodSeconds: 20
